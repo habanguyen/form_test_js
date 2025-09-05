@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="Main.css">
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+</head>
+<body>
+    <main>
+            <h2>Tìm kiếm nhân viên</h2>
+            <form id="search-employee-form" autocomplete="off">
+                <div class="form-group search-form-row">
+                    <div class="search-form-input">
+                        <label for="search-query">Nhập thông tin tìm kiếm:</label>
+                        <input type="text" id="search-query" name="query" required><button type="submit">Tìm kiếm</button>
+                    </div>
+                    <div class="search-form-actions">
+                                    <button id="show-create-form" type="button">Tạo mới nhân viên</button>
+                    </div>
+                </div>
+            </form>
+            <hr>
+            <div id="search-results"></div>
+            <div id="employee-list-container">
+                <h3>Danh sách nhân viên</h3>
+                <div id="employee-list" class="employee-list-scroll"></div>
+            </div>
+    <hr>
+            <!-- Overlay cho popup tạo nhân viên -->
+            <div id="create-employee-overlay" class="modal-overlay" style="display:none"></div>
+            <div class="modal-popup" id="create-employee-popup" style="display:none">
+                <h2>Tạo mới nhân viên</h2>
+                <form id="create-employee-form" autocomplete="off">
+                    <div class="form-group">
+                        <label for="create-name">Tên nhân viên:</label>
+                        <input type="text" id="create-name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="create-age">Tuổi:</label>
+                        <input type="number" id="create-age" name="age" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="create-email">Email:</label>
+                        <input type="email" id="create-email" name="email">
+                    </div>
+                    <div class="form-group">
+                        <label for="create-position">Chức vụ:</label>
+                        <input type="text" id="create-position" name="position" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="create-department">Phòng ban:</label>
+                        <input type="text" id="create-department" name="department" required>
+                    </div>
+                    <div class="modal-actions">
+                        <button type="button" id="close-create-form" class="close-modal">Huỷ</button>
+                        <button type="submit">Tạo mới</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Overlay và popup xác nhận xoá nhân viên (đặt ngoài các form khác) -->
+            <div id="delete-employee-overlay" class="modal-overlay" style="display:none"></div>
+            <div class="modal-popup" id="delete-employee-popup" style="display:none">
+                <h2>Xác nhận xoá nhân viên</h2>
+                <div id="delete-employee-message">Bạn có chắc muốn xoá nhân viên này?</div>
+                <div class="modal-actions">
+                    <button type="button" id="cancel-delete-employee" class="close-modal">Huỷ</button>
+                    <button type="button" id="confirm-delete-employee" class="delete-modal">Xoá</button>
+                </div>
+            </div>
+        <!-- Overlay cho popup cập nhật nhân viên -->
+        <div id="update-employee-overlay" class="modal-overlay" style="display:none"></div>
+        <div class="modal-popup" id="update-employee-popup" style="display:none">
+            <h2>Cập nhật thông tin nhân viên</h2>
+            <form id="update-employee-form" autocomplete="off">
+                <div class="form-group">
+                    <label for="update-id">Mã nhân viên:</label>
+                    <input type="text" id="update-id" name="id" required readonly>
+                </div>
+                <div class="form-group">
+                    <label for="update-name">Tên nhân viên:</label>
+                    <input type="text" id="update-name" name="name">
+                </div>
+                <div class="form-group">
+                    <label for="update-age">Tuổi:</label>
+                    <input type="number" id="update-age" name="age">
+                </div>
+                <div class="form-group">
+                    <label for="update-email">Email:</label>
+                    <input type="email" id="update-email" name="email">
+                </div>
+                <div class="form-group">
+                    <label for="update-position">Chức vụ:</label>
+                    <input type="text" id="update-position" name="position">
+                </div>
+                <div class="form-group">
+                    <label for="update-department">Phòng ban:</label>
+                    <input type="text" id="update-department" name="department">
+                </div>
+                        <div class="modal-actions">
+                            <button type="button" id="close-update-form" class="close-modal">Huỷ</button>
+                            <button type="submit">Cập nhật</button>
+                        </div>
+
+            </form>
+        </div>
+    </main>
+
+    <script src="test.js"></script>
+</body>
+</html>

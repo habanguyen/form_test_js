@@ -1,0 +1,348 @@
+/* Overlay tối nền khi bật popup */
+#sort-employee-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.6);
+    z-index: 900;
+}
+
+/* Popup chính */
+#sort-employee-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    padding: 20px 25px;
+    border-radius: 10px;
+    width: 400px;
+    max-width: 90%;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    z-index: 1000;
+}
+
+/* Tiêu đề popup */
+#sort-employee-popup h2 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 20px;
+    text-align: center;
+    color: #333;
+}
+
+/* Các nhóm input */
+#sort-employee-popup .form-group {
+    margin-bottom: 15px;
+}
+
+#sort-employee-popup label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 500;
+    color: #444;
+}
+
+#sort-employee-popup select {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+/* Vùng nút bấm */
+#sort-employee-popup .modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+#sort-employee-popup button {
+    padding: 8px 14px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.2s;
+}
+
+#sort-employee-popup .close-modal {
+    background: #ddd;
+    color: #333;
+}
+
+#sort-employee-popup .close-modal:hover {
+    background: #bbb;
+}
+
+#sort-employee-popup button[type="submit"] {
+    background: #007bff;
+    color: white;
+}
+
+#sort-employee-popup button[type="submit"]:hover {
+    background: #0056b3;
+}
+.modal-popup .delete-modal {
+	background: #e74c3c;
+	color: #fff;
+	border: none;
+	padding: 10px 18px;
+	border-radius: 4px;
+	font-size: 15px;
+	transition: background 0.2s;
+}
+.modal-popup .delete-modal:hover {
+	background: #c0392b;
+}
+/* Nhóm nút dưới cùng trong popup (tạo mới/cập nhật) */
+.modal-popup .modal-actions {
+	display: flex;
+	justify-content: flex-end;
+	gap: 10px;
+	margin-top: 10px;
+}
+
+.modal-popup .close-modal {
+	position: static;
+	font-size: 15px;
+	background: #eee;
+	color: #444;
+	border: 1px solid #bbb;
+	padding: 10px 18px;
+	border-radius: 4px;
+	transition: background 0.2s;
+}
+.modal-popup .close-modal:hover {
+	background: #e0e0e0;
+	color: #222;
+}
+/* Overlay làm mờ nền khi hiện popup (dùng chung cho tạo mới và cập nhật) */
+.modal-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	background: rgba(0,0,0,0.3);
+	z-index: 1000;
+}
+
+/* Popup form (tạo mới/cập nhật) */
+.modal-popup {
+	position: fixed !important;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background: #fff;
+	z-index: 1001;
+	box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+	border-radius: 10px;
+	min-width: 350px;
+	max-width: 95vw;
+	min-height: 100px;
+	padding: 32px 28px 18px 28px;
+	display: block;
+}
+
+.close-modal {
+	position: absolute;
+	top: 10px;
+	right: 16px;
+	background: transparent;
+	border: none;
+	font-size: 28px;
+	color: #888;
+	cursor: pointer;
+	z-index: 1002;
+}
+
+.modal-overlay {
+	backdrop-filter: blur(2.5px) grayscale(0.2) brightness(0.95);
+	-webkit-backdrop-filter: blur(2.5px) grayscale(0.2) brightness(0.95);
+}
+
+.search-form-row {
+	display: flex;
+	align-items: flex-end;
+	gap: 10px;
+}
+.search-form-input {
+	flex: 1;
+}
+.search-form-actions {
+	display: flex;
+	gap: 8px;
+    
+}
+.update-employee-btn {
+	background: #f1c40f;
+	color: #222;
+	border: none;
+	border-radius: 4px;
+	padding: 7px 16px;
+	font-size: 14px;
+	cursor: pointer;
+	margin-right: 10px;
+	margin-top: 8px;
+	transition: background 0.2s;
+}
+.update-employee-btn:hover {
+	background: #b89c0d;
+	color: #fff;
+}
+.employee-actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0 8px;
+	margin-top: 8px;
+}
+.delete-employee-btn {
+	background: #e74c3c;
+	color: #fff;
+	border: none;
+	border-radius: 4px;
+	padding: 7px 16px;
+	font-size: 14px;
+	cursor: pointer;
+	margin-left: 18px;
+	margin-top: 8px;
+	transition: background 0.2s;
+}
+.delete-employee-btn:hover {
+	background: #c0392b;
+}
+#employee-list {
+	max-height: 340px;
+	overflow-y: auto;
+	background: #fafbfc;
+	border-radius: 6px;
+	box-shadow: 0 1px 4px rgba(44,62,80,0.06);
+	padding: 8px 0;
+}
+.employee-item {
+	border: 1px solid #e1e4e8;
+	border-radius: 5px;
+	background: #fff;
+	margin: 8px 12px;
+	padding: 12px 16px;
+	box-shadow: 0 1px 2px rgba(44,62,80,0.04);
+	display: flex;
+	flex-wrap: wrap;
+	gap: 18px 32px;
+	font-size: 15px;
+}
+.employee-item > div {
+	min-width: 180px;
+	margin-bottom: 2px;
+}
+.employee-empty {
+	text-align: center;
+	color: #888;
+	padding: 24px 0;
+	font-size: 16px;
+}
+body {
+	font-family: Arial, Helvetica, sans-serif;
+	background: #f7f7f7;
+	margin: 0;
+	padding: 0;
+}
+
+main {
+	max-width: 700px;
+	margin: 30px auto;
+	background: #fff;
+	border-radius: 8px;
+	box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+	padding: 32px 24px;
+}
+
+h2, h3 {
+	color: #2c3e50;
+	margin-top: 0;
+    text-align: center;
+}
+
+
+.form-group {
+	margin-bottom: 16px;
+	display: flex;
+	flex-direction: column;
+}
+
+label {
+	margin-bottom: 6px;
+	font-weight: 500;
+}
+
+input[type="text"],
+input[type="email"] {
+	padding: 8px 10px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	font-size: 15px;
+	transition: border 0.2s;
+}
+input[type="text"]:focus,
+input[type="email"]:focus {
+	border: 1.5px solid #2980b9;
+	outline: none;
+}
+
+button[type="submit"],
+button[type="button"] {
+	background: #2980b9;
+	color: #fff;
+	border: none;
+	border-radius: 4px;
+	padding: 10px 18px;
+	font-size: 15px;
+	cursor: pointer;
+	margin-right: 8px;
+	margin-top: 8px;
+	transition: background 0.2s;
+    margin-left: 5px;
+}
+button[type="submit"]:hover,
+button[type="button"]:hover {
+	background: #1a5e8a;
+}
+
+#employee-list-container {
+	margin-top: 24px;
+}
+
+#employee-list-table {
+	width: 100%;
+	border-collapse: collapse;
+	background: #fafbfc;
+	margin-top: 8px;
+	border-radius: 6px;
+	overflow: hidden;
+	box-shadow: 0 1px 4px rgba(44,62,80,0.06);
+}
+#employee-list-table th, #employee-list-table td {
+	border: 1px solid #e1e4e8;
+	padding: 10px 8px;
+	text-align: left;
+}
+#employee-list-table th {
+	background: #eaf1fb;
+	color: #2c3e50;
+	font-weight: 600;
+}
+#employee-list-table tr:nth-child(even) {
+	background: #f4f8fb;
+}
+
+#search-results {
+	margin-top: 18px;
+	margin-bottom: 8px;
+	color: #34495e;
+	font-size: 15px;
+}
