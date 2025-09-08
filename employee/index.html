@@ -4,20 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="Main.css">
+    <link rel="stylesheet" href="index.css">
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
 </head>
 <body>
     <main>
-            <h2>Tìm kiếm nhân viên</h2>
+            <h2> Quản lý nhân viên </h2>
             <form id="search-employee-form" autocomplete="off">
                 <div class="form-group search-form-row">
                     <div class="search-form-input">
-                        <label for="search-query">Nhập thông tin tìm kiếm:</label>
-                        <input type="text" id="search-query" name="query" required><button type="submit">Tìm kiếm</button>
+                        <input type="text" id="search-query" name="query" required placeholder="Nhập thông tin tìm kiếm:">
+                        <button type="submit">Tìm kiếm</button>
                     </div>
                     <div class="search-form-actions">
-                                    <button id="show-create-form" type="button">Tạo mới nhân viên</button>
+                        <button id="show-create-form" type="button">Tạo mới nhân viên</button>
+                        <button id="filter-employee-btn" type="button">Sắp xếp nhân viên</button>
+                        <button id="goTo" type="button" onclick="window.location.href='/department/index.html'">QL phòng ban</button>
                     </div>
                 </div>
             </form>
@@ -106,8 +108,47 @@
 
             </form>
         </div>
+                <!-- Overlay cho popup lọc nhân viên -->
+        <div id="filter-employee-overlay" class="modal-overlay" style="display:none"></div>
+        <div class="modal-popup" id="filter-employee-popup" style="display:none">
+            <h2>Bộ lọc nhân viên</h2>
+            <form id="filter-employee-form" autocomplete="off">
+                <div class="form-group">
+                    <label for="filter-name">Tên nhân viên:</label>
+                    <input type="text" id="filter-name" name="name">
+                </div>
+                <div class="form-group">
+                    <label for="filter-age">Tuổi:</label>
+                    <input type="number" id="filter-age" name="age" placeholder="Nhập số tuổi">
+                </div>
+                <div class="form-group">
+                    <label for="filter-age-order">Sắp xếp theo tuổi:</label>
+                    <select id="filter-age-order" name="age-order">
+                        <option value="">-- Không sắp xếp --</option>
+                        <option value="asc">Từ bé → lớn</option>
+                        <option value="desc">Từ lớn → bé</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="filter-email">Email:</label>
+                    <input type="text" id="filter-email" name="email">
+                </div>
+                <div class="form-group">
+                    <label for="filter-position">Chức vụ:</label>
+                    <input type="text" id="filter-position" name="position">
+                </div>
+                <div class="form-group">
+                    <label for="filter-department">Phòng ban:</label>
+                    <input type="text" id="filter-department" name="department">
+                </div>
+                <div class="modal-actions">
+                    <button type="button" id="close-filter-form" class="close-modal">Huỷ</button>
+                    <button type="submit">Lọc</button>
+                </div>
+            </form>
+        </div>
     </main>
 
-    <script src="test.js"></script>
+    <script src="index.js"></script>
 </body>
 </html>

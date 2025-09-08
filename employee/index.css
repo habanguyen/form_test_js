@@ -1,3 +1,92 @@
+/* Overlay tối nền khi bật popup */
+#sort-employee-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.6);
+    z-index: 900;
+}
+
+/* Popup chính */
+#sort-employee-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    padding: 20px 25px;
+    border-radius: 10px;
+    width: 400px;
+    max-width: 90%;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    z-index: 1000;
+}
+
+/* Tiêu đề popup */
+#sort-employee-popup h2 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 20px;
+    text-align: center;
+    color: #333;
+}
+
+/* Các nhóm input */
+#sort-employee-popup .form-group {
+    margin-bottom: 15px;
+}
+
+#sort-employee-popup label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 500;
+    color: #444;
+}
+
+#sort-employee-popup select {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+/* Vùng nút bấm */
+#sort-employee-popup .modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+#sort-employee-popup button {
+    padding: 8px 14px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.2s;
+}
+
+#sort-employee-popup .close-modal {
+    background: #ddd;
+    color: #333;
+}
+
+#sort-employee-popup .close-modal:hover {
+    background: #bbb;
+}
+
+#sort-employee-popup button[type="submit"] {
+    background: #007bff;
+    color: white;
+}
+
+#sort-employee-popup button[type="submit"]:hover {
+    background: #0056b3;
+}
 .modal-popup .delete-modal {
 	background: #e74c3c;
 	color: #fff;
@@ -256,4 +345,45 @@ button[type="button"]:hover {
 	margin-bottom: 8px;
 	color: #34495e;
 	font-size: 15px;
+}
+.link-button {
+    display: none;
+}
+
+#goBack {
+    background-color: #17a2b8;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    min-width: 120px;
+}
+
+#goBack:hover {
+    background-color: #138496;
+}
+/* Nút liên kết với onclick */
+#goBack {
+    background-color: #17a2b8; /* Màu xanh ngọc lam, tương tự #sortBtn trong Department */
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 15px;
+    transition: all 0.3s ease; /* Đồng bộ hiệu ứng hover với Department */
+    min-width: 120px;
+    margin: 10px; /* Đồng bộ margin với các nút trong .actions */
+}
+
+#goBack:hover {
+    filter: brightness(110%); /* Đồng bộ hiệu ứng hover với Department */
+    transform: translateY(-2px); /* Thêm hiệu ứng nâng lên khi hover */
+}
+
+/* Ẩn nút link cũ nếu có */
+.link-button {
+    display: none;
 }

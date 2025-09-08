@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý Phòng Ban</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+    <main>
+        <div class="container">
+            <h1> Quản lý phòng ban</h1>
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Nhập thông tin tìm kiếm:">
+                <button id="searchBtn">Tìm kiếm</button>
+            </div>
+            <div class="actions">
+                <button id="addBtn">Tạo mới nhân viên</button>
+                <button id="sortBtn">Lọc theo phòng ban</button>
+                <button id="filterBtn">Lọc nhân viên</button>
+                <button id="goTo" onclick="window.location.href='/employee/index.html'">QL nhân viên</button>
+            </div>
+    <hr>
+            <h2>Danh sách nhân viên</h2>
+            <div id="employeeList" class="employee-list">
+                <!-- Employee items will be rendered here -->
+            </div>
+        </div>
+    <hr>
+        <!-- Modal for add/edit -->
+        <div id="employeeModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2 id="modalTitle">Thêm nhân viên</h2>
+                <form id="employeeForm">
+                    <label for="id">Mã NV:</label>
+                    <input type="number" id="id" required>
+                    <label for="name">Tên:</label>
+                    <input type="text" id="name" required>
+                    <label for="age">Tuổi:</label>
+                    <input type="number" id="age" required>
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" required>
+                    <label for="position">Chức vụ:</label>
+                    <input type="text" id="position" required>
+                    <label for="department">Phòng ban:</label>
+                    <input type="text" id="department" required>
+                    <button type="submit">Lưu</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Filter Modal -->
+        <div id="filterModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Lọc nhân viên</h2>
+                <form id="filterForm">
+                    <label for="filterName">Tên:</label>
+                    <input type="text" id="filterName">
+                    <label for="filterAge">Tuổi từ:</label>
+                    <input type="number" id="filterAge">
+                    <label for="filterEmail">Email:</label>
+                    <input type="text" id="filterEmail">
+                    <label for="filterPosition">Chức vụ:</label>
+                    <input type="text" id="filterPosition">
+                    <label for="filterAgeOrder">Sắp xếp theo tuổi:</label>
+                    <select id="filterAgeOrder">
+                        <option value="">Không sắp xếp</option>
+                        <option value="asc">Tăng dần</option>
+                        <option value="desc">Giảm dần</option>
+                    </select>
+                    <button type="submit">Lọc</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Department Filter Modal -->
+        <div id="departmentFilterModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Lọc theo phòng ban</h2>
+                <form id="departmentFilterForm">
+                    <label for="departmentFilterSelect">Phòng ban:</label>
+                    <select id="departmentFilterSelect">
+                        <option value="">Tất cả phòng ban</option>
+                        <option value="Development">Development</option>
+                        <option value="Sales">Sales</option>
+                        <option value="Marketing">Marketing</option>
+                        <option value="Finance">Finance</option>
+                        <option value="HR">HR</option>
+                        <option value="IT">IT</option>
+                    </select>
+                    <button type="submit">Lọc</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Sort Modal -->
+        <div id="sortModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Sắp xếp nhân viên</h2>
+                <form id="sortForm">
+                    <label for="sortField">Trường:</label>
+                    <select id="sortField">
+                        <option value="name">Tên</option>
+                        <option value="age">Tuổi</option>
+                        <option value="position">Chức vụ</option>
+                        <option value="department">Phòng ban</option>
+                    </select>
+                    <label for="sortOrder">Thứ tự:</label>
+                    <select id="sortOrder">
+                        <option value="asc">Tăng dần</option>
+                        <option value="desc">Giảm dần</option>
+                    </select>
+                    <button type="submit">Sắp xếp</button>
+                </form>
+            </div>
+        </div>
+
+    </main>
+    <script src="index.js"></script>
+</body>
+
+</html>

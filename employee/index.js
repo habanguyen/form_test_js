@@ -90,6 +90,24 @@ function searchEmployees(query) {
         emp.department.toLowerCase().includes(query)
     );
 }
+function sortEmployees(field, order) {
+    const employees = manager.getAll(); // lấy danh sách hiện tại
+    
+    employees.sort((a, b) => {
+        let valA = a[field] ? a[field].toString().toLowerCase() : '';
+        let valB = b[field] ? b[field].toString().toLowerCase() : '';
+
+        if (field === 'age') { // nếu là số thì parseInt
+            valA = parseInt(valA, 10) || 0;
+            valB = parseInt(valB, 10) || 0;
+        }
+
+        if (order === 'asc') return valA > valB ? 1 : -1;
+        return valA < valB ? 1 : -1;
+    });
+
+    return employees;
+}
 // // ------------------- UI Helpers -------------------
 
 // Hàm render danh sách nhân viên ra bảng HTML (dùng bảng đã tạo trong Main.html)
@@ -115,11 +133,9 @@ function renderEmployeeTable(employees) {
     if (typeof attachEmployeeActionEvents === 'function') attachEmployeeActionEvents();
 }
 
-// ------------------- UI Helpers -------------------
-
 // Gắn lại sự kiện cho các nút cập nhật/xoá sau mỗi lần render
 function attachEmployeeActionEvents() {
-    // Move Up
+    // Sự kiện di chuyển vị trí nhân viên
     document.querySelectorAll('.move-up-btn').forEach(btn => {
         btn.onclick = function() {
             const idx = Number(btn.getAttribute('data-idx'));
@@ -130,8 +146,6 @@ function attachEmployeeActionEvents() {
             }
         };
     });
-
-    // Move Down
     document.querySelectorAll('.move-down-btn').forEach(btn => {
         btn.onclick = function() {
             const idx = Number(btn.getAttribute('data-idx'));
@@ -142,8 +156,7 @@ function attachEmployeeActionEvents() {
             }
         };
     });
-
-    // Update: show popup
+    // Sự kiện cho nút cập nhật: show popup cập nhật
     document.querySelectorAll('.update-employee-btn').forEach(btn => {
         btn.onclick = function() {
             const id = Number(btn.getAttribute('data-id'));
@@ -155,7 +168,7 @@ function attachEmployeeActionEvents() {
                 document.getElementById('update-email').value = emp.email ?? '';
                 document.getElementById('update-position').value = emp.position;
                 document.getElementById('update-department').value = emp.department ?? '';
-
+                // Hiện popup cập nhật
                 const overlay = document.getElementById('update-employee-overlay');
                 const popup = document.getElementById('update-employee-popup');
                 if (overlay && popup) {
@@ -166,63 +179,22 @@ function attachEmployeeActionEvents() {
             }
         };
     });
-
-    // Delete: show confirm modal
-    document.querySelectorAll('.delete-employee-btn').forEach(btn => {
-        btn.onclick = function() {
-            const id = Number(btn.getAttribute('data-id'));
-            const overlay = document.getElementById('delete-employee-overlay');
-            const popup = document.getElementById('delete-employee-popup');
-            const msg = document.getElementById('delete-employee-message');
-
-            if (overlay && popup && msg) {
-                overlay.style.display = 'block';
-                popup.style.display = 'block';
-                document.body.classList.add('modal-open');
-
-                const emp = manager.Employees.find(e => e.id === id);
-                msg.textContent = emp
-                    ? `Bạn có chắc muốn xoá nhân viên: ${emp.name} (ID: ${emp.id})?`
-                    : 'Bạn có chắc muốn xoá nhân viên này?';
-
-                const cancelBtn = document.getElementById('cancel-delete-employee');
-                const confirmBtn = document.getElementById('confirm-delete-employee');
-
-                function closeDeletePopup() {
-                    overlay.style.display = 'none';
-                    popup.style.display = 'none';
-                    document.body.classList.remove('modal-open');
-                    if (cancelBtn) cancelBtn.onclick = null;
-                    if (confirmBtn) confirmBtn.onclick = null;
-                    overlay.onclick = null;
-                }
-
-                if (cancelBtn) cancelBtn.onclick = closeDeletePopup;
-                if (overlay) overlay.onclick = closeDeletePopup;
-                if (confirmBtn) confirmBtn.onclick = function() {
-                    deleteEmployeeById(id);
-                    closeDeletePopup();
-                };
-            }
-        };
-    });
-
-    // Update form submit
-    const updateForm = document.getElementById('update-employee-form');
-    const overlayUpdate = document.getElementById('update-employee-overlay');
-    const popupUpdate = document.getElementById('update-employee-popup');
-    const closeBtnUpdate = document.getElementById('close-update-form');
-
+    // Sự kiện đóng popup cập nhật
+    const overlay = document.getElementById('update-employee-overlay');
+    const popup = document.getElementById('update-employee-popup');
+    const closeBtn = document.getElementById('close-update-form');
     function closeUpdatePopup() {
-        if (overlayUpdate && popupUpdate) {
-            overlayUpdate.style.display = 'none';
-            popupUpdate.style.display = 'none';
+        if (overlay && popup) {
+            overlay.style.display = 'none';
+            popup.style.display = 'none';
             document.body.classList.remove('modal-open');
         }
     }
-    if (closeBtnUpdate) closeBtnUpdate.onclick = closeUpdatePopup;
-    if (overlayUpdate) overlayUpdate.onclick = closeUpdatePopup;
+    if (closeBtn) closeBtn.onclick = closeUpdatePopup;
+    if (overlay) overlay.onclick = closeUpdatePopup;
 
+    // Sự kiện submit form cập nhật: ẩn popup khi xong
+    const updateForm = document.getElementById('update-employee-form');
     if (updateForm) {
         updateForm.onsubmit = function(e) {
             e.preventDefault();
@@ -238,16 +210,53 @@ function attachEmployeeActionEvents() {
             closeUpdatePopup();
         };
     }
+    document.querySelectorAll('.delete-employee-btn').forEach(btn => {
+        btn.onclick = function() {
+            const id = Number(btn.getAttribute('data-id'));
+            // Hiện modal xác nhận xoá
+            const overlay = document.getElementById('delete-employee-overlay');
+            const popup = document.getElementById('delete-employee-popup');
+            const msg = document.getElementById('delete-employee-message');
+            if (overlay && popup && msg) {
+                overlay.style.display = 'block';
+                popup.style.display = 'block';
+                document.body.classList.add('modal-open');
+                // Hiển thị thông tin nhân viên nếu muốn
+                const emp = manager.Employees.find(e => e.id === id);
+                msg.textContent = emp ? `Bạn có chắc muốn xoá nhân viên: ${emp.name} (ID: ${emp.id})?` : 'Bạn có chắc muốn xoá nhân viên này?';
+                // Gắn sự kiện xác nhận/hủy
+                const cancelBtn = document.getElementById('cancel-delete-employee');
+                const confirmBtn = document.getElementById('confirm-delete-employee');
+                function closeDeletePopup() {
+                    overlay.style.display = 'none';
+                    popup.style.display = 'none';
+                    document.body.classList.remove('modal-open');
+                    // Xoá sự kiện để tránh leak
+                    if (cancelBtn) cancelBtn.onclick = null;
+                    if (confirmBtn) confirmBtn.onclick = null;
+                    overlay.onclick = null;
+                }
+                if (cancelBtn) cancelBtn.onclick = closeDeletePopup;
+                if (overlay) overlay.onclick = closeDeletePopup;
+                if (confirmBtn) confirmBtn.onclick = function() {
+                    deleteEmployeeById(id);
+                    closeDeletePopup();
+                };
+            }
+        };
+    });
 }
 
 // ------------------- UI Actions -------------------
 
+// Gắn sự kiện cho form tìm kiếm và in danh sách ban đầu
 window.addEventListener('DOMContentLoaded', function() {
-    // SortableJS (kéo thả)
+    // Kích hoạt kéo thả bằng SortableJS
     if (window.Sortable) {
         new Sortable(document.getElementById('employee-list'), {
             animation: 150,
             onEnd: function (evt) {
+                // Cập nhật lại thứ tự trong manager.Employees
                 const nodes = Array.from(document.querySelectorAll('#employee-list .employee-item'));
                 const newOrder = nodes.map(node => Number(node.getAttribute('data-id')));
                 manager.Employees.sort((a, b) => newOrder.indexOf(a.id) - newOrder.indexOf(b.id));
@@ -255,17 +264,27 @@ window.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
-
-    // Nút sắp xếp
-    const btnSort = document.getElementById('show-arrange-form');
-    if (btnSort) btnSort.onclick = sortEmployees;
-
-    // Popup tạo mới
+    // Sự kiện popup tạo mới nhân viên
     const btnShowCreate = document.getElementById('show-create-form');
     const overlayCreate = document.getElementById('create-employee-overlay');
     const popupCreate = document.getElementById('create-employee-popup');
     const closeCreateBtn = document.getElementById('close-create-form');
+    function handleSortFormSubmit(e) {
+    e.preventDefault();
+    const field = document.getElementById('sort-field').value;
+    const order = document.getElementById('sort-order').value;
 
+    const sorted = sortEmployees(field, order);
+    renderEmployeeTable(sorted);
+
+    // đóng popup
+    closeSortPopup();
+    }
+
+    function closeSortPopup() {
+        document.getElementById('sort-employee-overlay').style.display = 'none';
+        document.getElementById('sort-employee-popup').style.display = 'none';
+    } 
     function closeCreatePopup() {
         if (overlayCreate && popupCreate) {
             overlayCreate.style.display = 'none';
@@ -273,8 +292,7 @@ window.addEventListener('DOMContentLoaded', function() {
             document.body.classList.remove('modal-open');
         }
     }
-
-    if (btnShowCreate) {
+    if (btnShowCreate && overlayCreate && popupCreate) {
         btnShowCreate.onclick = function() {
             overlayCreate.style.display = 'block';
             popupCreate.style.display = 'block';
@@ -284,9 +302,9 @@ window.addEventListener('DOMContentLoaded', function() {
     if (closeCreateBtn) closeCreateBtn.onclick = closeCreatePopup;
     if (overlayCreate) overlayCreate.onclick = closeCreatePopup;
 
-    // Submit tạo mới
+    // Sự kiện submit form tạo mới nhân viên (ẩn popup và overlay khi xong) - Đặt sau khi đã khai báo các biến overlayCreate, popupCreate
     const createForm = document.getElementById('create-employee-form');
-    if (createForm) {
+    if (createForm && overlayCreate && popupCreate) {
         createForm.addEventListener('submit', function(e) {
             e.preventDefault();
             const name = document.getElementById('create-name').value.trim();
@@ -298,14 +316,14 @@ window.addEventListener('DOMContentLoaded', function() {
             addEmployee(id, name, age, position, department);
             alert('Đã thêm nhân viên mới!');
             createForm.reset();
-            closeCreatePopup();
+            overlayCreate.style.display = 'none';
+            popupCreate.style.display = 'none';
+            document.body.classList.remove('modal-open');
         });
     }
-
-    // In danh sách ban đầu
+    // In toàn bộ danh sách ban đầu
     renderEmployeeTable(manager.getAll());
-
-    // Form tìm kiếm
+    // Gắn sự kiện tìm kiếm
     const searchForm = document.getElementById('search-employee-form');
     if (searchForm) {
         searchForm.addEventListener('submit', function(e) {
@@ -315,4 +333,116 @@ window.addEventListener('DOMContentLoaded', function() {
             renderEmployeeTable(results);
         });
     }
+        // mở popup lọc
+    document.getElementById('filter-employee-btn').addEventListener('click', () => {
+        document.getElementById('filter-employee-overlay').style.display = 'block';
+        document.getElementById('filter-employee-popup').style.display = 'block';
+    });
+
+    // đóng popup lọc
+    document.getElementById('close-filter-form').addEventListener('click', closeFilterPopup);
+    document.getElementById('filter-employee-overlay').addEventListener('click', closeFilterPopup);
+
+    function closeFilterPopup() {
+        document.getElementById('filter-employee-overlay').style.display = 'none';
+        document.getElementById('filter-employee-popup').style.display = 'none';
+    }
+
+   // xử lý submit form lọc
+    document.getElementById('filter-employee-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const name = document.getElementById('filter-name').value.trim().toLowerCase();
+        const age = Number(document.getElementById('filter-age').value);
+        const email = document.getElementById('filter-email').value.trim().toLowerCase();
+        const position = document.getElementById('filter-position').value.trim().toLowerCase();
+        const department = document.getElementById('filter-department').value.trim().toLowerCase();
+
+        // 🔹 đọc thêm field sắp xếp theo tuổi
+        const ageOrder = document.getElementById('filter-age-order').value;
+
+        let results = manager.getAll().filter(emp => {
+            return (!name || emp.name.toLowerCase().includes(name)) &&
+                (!age || emp.age >= age) &&
+                (!email || emp.email.toLowerCase().includes(email)) &&
+                (!position || emp.position.toLowerCase().includes(position)) &&
+                (!department || emp.department.toLowerCase().includes(department));
+        });
+
+        // 🔹 sắp xếp theo tuổi nếu có chọn
+        if (ageOrder === "asc") {
+            results.sort((a, b) => a.age - b.age);
+        } else if (ageOrder === "desc") {
+            results.sort((a, b) => b.age - a.age);
+        }
+
+        renderEmployeeTable(results);
+        closeFilterPopup();
+    });
 });
+// --- Lấy các phần tử cần thiết ---
+const sortBtn = document.getElementById('sort-employee-btn'); // nút mở popup (bạn nhớ có trong HTML)
+const sortOverlay = document.getElementById('sort-employee-overlay');
+const sortPopup = document.getElementById('sort-employee-popup');
+const closeSortBtn = document.getElementById('close-sort-form');
+const sortForm = document.getElementById('sort-employee-form');
+
+// --- Mở popup khi bấm nút "Sắp xếp nhân viên" ---
+if (sortBtn) {
+    sortBtn.addEventListener('click', () => {
+        sortOverlay.style.display = 'block';
+        sortPopup.style.display = 'block';
+    });
+}
+
+// --- Đóng popup khi bấm nút "Huỷ" ---
+if (closeSortBtn) {
+    closeSortBtn.addEventListener('click', () => {
+        sortOverlay.style.display = 'none';
+        sortPopup.style.display = 'none';
+    });
+}
+
+// --- Đóng popup khi click ra ngoài (overlay) ---
+if (sortOverlay) {
+    sortOverlay.addEventListener('click', () => {
+        sortOverlay.style.display = 'none';
+        sortPopup.style.display = 'none';
+    });
+}
+
+// --- Xử lý khi submit form sắp xếp ---
+if (sortForm) {
+    sortForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const field = document.getElementById('sort-field').value;
+        const order = document.getElementById('sort-order').value;
+
+        // Lấy danh sách nhân viên (giả sử bạn đang lưu ở localStorage)
+        let employees = JSON.parse(localStorage.getItem('employees') || '[]');
+
+        // Hàm sắp xếp
+        employees.sort((a, b) => {
+            let valA = a[field] ? a[field].toString().toLowerCase() : '';
+            let valB = b[field] ? b[field].toString().toLowerCase() : '';
+
+            if (field === 'age') {
+                valA = parseInt(valA, 10) || 0;
+                valB = parseInt(valB, 10) || 0;
+            }
+
+            if (order === 'asc') return valA > valB ? 1 : -1;
+            return valA < valB ? 1 : -1;
+        });
+
+        // Lưu lại và render ra giao diện
+        localStorage.setItem('employees', JSON.stringify(employees));
+        if (typeof renderEmployeeList === 'function') {
+            renderEmployeeList();
+        }
+
+        // Đóng popup sau khi sắp xếp
+        sortOverlay.style.display = 'none';
+        sortPopup.style.display = 'none';
+    });
+}

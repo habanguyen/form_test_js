@@ -1,0 +1,332 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+}
+
+/* Container chính */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Tiêu đề */
+h1, h2 {
+    text-align: center;
+}
+
+/* Thanh tìm kiếm */
+.search-bar {
+    display: flex;
+    flex-wrap: wrap; /* Cho phép wrapping khi nhỏ */
+    margin-bottom: 20px;
+}
+.search-bar input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px 0 0 4px;
+}
+.search-bar button {
+    padding: 10px 20px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+/* Nút hành động */
+.actions {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap; /* Cho phép các nút tự động xuống dòng */
+    margin-bottom: 20px;
+}
+.actions button {
+    padding: 10px 20px;
+    margin: 10px;
+    background: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.actions button:hover {
+    filter: brightness(110%);
+    transform: translateY(-2px);
+}
+
+/* Các nút đặc biệt */
+#sortBtn {
+    background: #17a2b8;
+}
+#filterBtn {
+    background: #ffc107;
+    color: black;
+}
+/* Thêm hover cho filterBtn */
+#filterBtn:hover {
+    background: #e0a800;
+    transform: translateY(-2px);
+}
+
+/* Danh sách nhân viên */
+.employee-list {
+    max-height: 400px;
+    overflow-y: auto;
+}
+.employee-item {
+    border: 1px solid #e1e4e8;
+    border-radius: 5px;
+    background: #fff;
+    margin: 8px 12px;
+    padding: 12px 16px;
+    box-shadow: 0 1px 2px rgba(44,62,80,0.04);
+    display: flex;
+    flex-wrap: wrap; /* cho phép nội dung tự động xuống dòng */
+    gap: 18px 32px;
+    font-size: 15px;
+}
+.employee-info {
+    flex: 1;
+}
+
+/* Nút hành động của nhân viên */
+.employee-actions button {
+    padding: 5px 10px;
+    margin-left: 5px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.update-btn {
+    background: #f1c40f;
+    color: #222;
+    border: none;
+    border-radius: 4px;
+    padding: 7px 16px;
+    font-size: 14px;
+    cursor: pointer;
+    margin-right: 10px;
+    margin-top: 8px;
+    transition: background 0.2s;
+}
+.update-btn:hover {
+    background: #b89c0d;
+    color: #fff;
+}
+.delete-btn {
+    background: #e74c3c;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 7px 16px;
+    font-size: 14px;
+    cursor: pointer;
+    margin-left: 18px;
+    margin-top: 8px;
+    transition: background 0.2s;
+}
+.delete-btn:hover {
+    background: #c0392b;
+}
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+}
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px;
+}
+
+/* Đóng modal */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Form */
+form label {
+    display: block;
+    margin-top: 10px;
+}
+form input, form select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+form button {
+    padding: 10px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+}
+
+.link-button {
+    display: none;
+}
+
+#goBack {
+    background-color: #17a2b8;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    min-width: 120px;
+}
+
+#goBack:hover {
+    background-color: #138496;
+}
+
+/* Media Queries cho responsive design */
+@media (max-width: 768px) {
+    /* Thay đổi padding và font-size của các nút trong actions */
+    .actions {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px; /* Khoảng cách giữa các nút */
+    }
+    .actions button {
+        padding: 10px 20px; /* Kích thước nút hợp lý */
+        font-size: 14px; /* Kích thước chữ dễ đọc */
+        width: auto; /* Không chiếm toàn chiều rộng */
+        min-width: 120px; /* Độ rộng tối thiểu để nút không quá nhỏ */
+        border-radius: 8px; /* Bo góc mềm mại */
+        transition: background-color 0.3s ease; /* Hiệu ứng hover */
+    }
+    .actions button:hover {
+        background-color: #218838; /* Màu xanh đậm hơn khi hover */
+        color: #fff; /* Chữ trắng để nổi bật */
+    }
+
+    /* Chỉnh sửa search bar cho bố cục dọc */
+    .search-bar {
+        flex-direction: column;
+        gap: 10px; /* Khoảng cách giữa input và button */
+        align-items: stretch; /* Căn đều các phần tử */
+    }
+    .search-bar input {
+        padding: 12px; /* Tăng padding cho dễ nhập */
+        font-size: 14px; /* Kích thước chữ hợp lý */
+        border-radius: 8px; /* Bo góc đồng nhất */
+        border: 2px solid #ccc; /* Đường viền rõ ràng hơn */
+        width: 100%; /* Input chiếm toàn chiều rộng */
+    }
+    .search-bar button {
+        padding: 12px 20px; /* Kích thước nút hợp lý */
+        font-size: 14px;
+        border-radius: 8px; /* Bo góc đồng nhất */
+        width: auto; /* Không chiếm toàn chiều rộng */
+        min-width: 120px; /* Độ rộng tối thiểu */
+        background-color: #007bff; /* Màu xanh dương nổi bật */
+        border: none;
+        align-self: center; /* Căn giữa nút */
+        transition: background-color 0.3s ease; /* Hiệu ứng hover */
+    }
+    .search-bar button:hover {
+        background-color: #0056b3; /* Màu đậm hơn khi hover */
+    }
+
+    /* Chỉnh sửa danh sách nhân viên */
+    .employee-item {
+        flex-direction: column;
+        font-size: 14px; /* Kích thước chữ dễ đọc */
+        padding: 15px; /* Tăng padding để không bị chật */
+        border-radius: 10px; /* Bo góc mềm mại */
+        background-color: #f9f9f9; /* Màu nền nhẹ nhàng */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Thêm bóng nhẹ */
+        margin-bottom: 15px; /* Khoảng cách giữa các item */
+    }
+    .employee-info {
+        margin-bottom: 10px; /* Khoảng cách giữa thông tin và nút */
+    }
+    .employee-info div {
+        margin-bottom: 5px; /* Khoảng cách giữa các dòng thông tin */
+    }
+
+    /* Các nút của nhân viên */
+    .employee-actions {
+        display: flex;
+        flex-direction: row; /* Chuyển về hàng ngang nếu đủ không gian */
+        gap: 10px; /* Khoảng cách giữa các nút */
+        justify-content: center; /* Căn giữa các nút */
+        width: 100%;
+    }
+    .employee-actions button {
+        padding: 8px 15px; /* Kích thước nút hợp lý */
+        font-size: 14px; /* Kích thước chữ hợp lý */
+        width: auto; /* Không chiếm toàn chiều rộng */
+        min-width: 100px; /* Độ rộng tối thiểu */
+        border-radius: 8px; /* Bo góc đồng nhất */
+        border: none;
+        transition: all 0.3s ease; /* Hiệu ứng mượt mà */
+    }
+    .update-btn {
+        background-color: #ffc107; /* Màu vàng cho nút cập nhật */
+        color: #333; /* Chữ đậm hơn */
+    }
+    .update-btn:hover {
+        background-color: #e0a800; /* Màu đậm hơn khi hover */
+        color: #fff; /* Chữ trắng khi hover */
+    }
+    .delete-btn {
+        background-color: #dc3545; /* Màu đỏ cho nút xóa */
+        color: #fff;
+    }
+    .delete-btn:hover {
+        background-color: #c82333; /* Màu đậm hơn khi hover */
+    }
+
+    /* Đảm bảo modal không quá rộng */
+    .modal-content {
+        width: 90%; /* Giảm chiều rộng modal trên màn hình nhỏ */
+        max-width: 400px; /* Giới hạn tối đa */
+    }
+}
+
+/* Thêm một số kiểu chung để tăng tính thẩm mỹ (nếu chưa có) */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.container {
+    border-radius: 12px; /* Bo góc cho container */
+    overflow: hidden; /* Đảm bảo các phần tử con không vượt ra ngoài */
+}
