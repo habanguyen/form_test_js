@@ -88,15 +88,16 @@ function searchEmployees(query) {
     );
 }
 
-function sortEmployees(field, order) {
+function sortEmployees(field, order) { // truyền vào 2 tham số field là tên cột để sắp xếp(tên , tuổi , ...) và order là kiểu sắp xếp (lớn -> bé or ngược lại)
     const employees = manager.getAll();
-    employees.sort((a, b) => {
+    employees.sort((a, b) => {         // hàm sort trong js tự động lấy cặp phần từ trong mảng truyền vào hàm so sánh cụ thể ở đây là biến a và b
         let valA = a[field] ? a[field].toString().toLowerCase() : '';
         let valB = b[field] ? b[field].toString().toLowerCase() : '';
         if (field === 'age') {
             valA = parseInt(valA, 10) || 0;
             valB = parseInt(valB, 10) || 0;
         }
+        // trả về -1 nếu a > b , = 1 nếu a < b 
         return order === 'asc' ? (valA > valB ? 1 : -1) : (valA < valB ? 1 : -1);
     });
     return employees;
